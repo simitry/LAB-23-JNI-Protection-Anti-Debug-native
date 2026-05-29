@@ -1,0 +1,36 @@
+apply plugin: "com.android.application"
+
+android {
+    namespace "com.example.jnidemo"
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.example.jnidemo"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        /*
+         * Gradle delegates native compilation to CMake.
+         * CMake builds libnative-lib.so from native-lib.cpp.
+         */
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17 -Wall -Wextra"
+            }
+        }
+    }
+
+    /*
+     * Pin the installed NDK version so the native build is reproducible.
+     */
+    ndkVersion "25.1.8937393"
+
+    externalNativeBuild {
+        cmake {
+            path file("src/main/cpp/CMakeLists.txt")
+            version "3.22.1"
+        }
+    }
+}
